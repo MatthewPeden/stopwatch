@@ -8,7 +8,7 @@ class StopwatchPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final maxWidth = MediaQuery.of(context).size.width * 0.8;
+    final maxWidth = MediaQuery.of(context).size.width * 0.9;
     final maxHeight = MediaQuery.of(context).size.height * 0.8;
     final timerAndButtonsHeight = MediaQuery.of(context).size.height * 0.15;
 
@@ -17,11 +17,11 @@ class StopwatchPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: secondaryColor,
-        toolbarHeight: 30,
+        toolbarHeight: MediaQuery.of(context).size.height * 0.05,
       ),
-      bottomNavigationBar: const BottomAppBar(
+      bottomNavigationBar: BottomAppBar(
         color: secondaryColor,
-        height: 50,
+        height: MediaQuery.of(context).size.height * 0.08,
       ),
       body: Center(
         child: SizedBox(
@@ -79,6 +79,7 @@ class StopwatchPage extends ConsumerWidget {
                               width: 1.0,
                               color: secondaryColor,
                             ),
+                            borderRadius: BorderRadius.circular(4.0),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -108,9 +109,9 @@ class StopwatchPage extends ConsumerWidget {
                                 String? value = stopwatchState.laps[key];
 
                                 return Container(
-                                  decoration: const BoxDecoration(
+                                  decoration: BoxDecoration(
                                       color: listTileColor,
-                                      border: Border(
+                                      border: const Border(
                                         bottom: BorderSide(
                                           color: secondaryColor,
                                           width: 1.0,
@@ -124,8 +125,10 @@ class StopwatchPage extends ConsumerWidget {
                                           width: 1.0,
                                         ),
                                       ),
+                                    borderRadius: BorderRadius.circular(4.0),
                                   ),
                                   child: ListTile(
+                                    visualDensity: const VisualDensity(vertical: -4),
                                     leading: Text(
                                       key,
                                       style: const TextStyle(
@@ -169,7 +172,7 @@ class StopwatchPage extends ConsumerWidget {
                   width: 0.75,
                   color: secondaryColor,
               ),
-              borderRadius: BorderRadius.circular(100)),
+              borderRadius: BorderRadius.circular(100.0)),
           child: Text(
             label,
             style: const TextStyle(
