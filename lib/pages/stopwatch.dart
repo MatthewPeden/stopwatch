@@ -8,38 +8,41 @@ class StopwatchPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final maxWidth = MediaQuery.of(context).size.width * 0.9;
-    final maxHeight = MediaQuery.of(context).size.height * 0.8;
-    final timerAndButtonsHeight = MediaQuery.of(context).size.height * 0.15;
+    final mediaWidth = MediaQuery.of(context).size.width;
+    final mediaHeight = MediaQuery.of(context).size.height;
+    final maxWidth = mediaWidth * 0.9;
+    final timerAndButtonsHeight = mediaHeight * 0.15;
+
+    BoxDecoration generalBoxDecoration = BoxDecoration(
+      color: primaryColor,
+      border: Border.all(
+        width: 1.0,
+        color: secondaryColor,
+      ),
+      borderRadius: BorderRadius.circular(4.0),
+    );
 
     final stopwatchState = ref.watch(stopwatchProvider);
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: secondaryColor,
-        toolbarHeight: MediaQuery.of(context).size.height * 0.05,
+        toolbarHeight: mediaHeight * 0.05,
       ),
       bottomNavigationBar: BottomAppBar(
         color: secondaryColor,
-        height: MediaQuery.of(context).size.height * 0.08,
+        height: mediaHeight * 0.08,
       ),
       body: Center(
         child: SizedBox(
             width: maxWidth,
-            height: maxHeight,
+            height: mediaHeight * 0.8,
             child: Column(
               children: <Widget>[
                 Container(
                   height: timerAndButtonsHeight,
                   width: maxWidth,
-                  decoration: BoxDecoration(
-                    color: primaryColor,
-                    border: Border.all(
-                      color: secondaryColor,
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(4.0),
-                  ),
+                  decoration: generalBoxDecoration,
                   child: Center(
                     child: Text(
                       stopwatchState.time,
@@ -73,14 +76,7 @@ class StopwatchPage extends ConsumerWidget {
                     child: Column(
                       children: [
                         Container(
-                          decoration: BoxDecoration(
-                            color: primaryColor,
-                            border: Border.all(
-                              width: 1.0,
-                              color: secondaryColor,
-                            ),
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
+                          decoration: generalBoxDecoration,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Align(
@@ -108,41 +104,25 @@ class StopwatchPage extends ConsumerWidget {
                                 String key = keys[index];
                                 String? value = stopwatchState.laps[key];
 
+                                BorderSide borderSide = const BorderSide(
+                                  color: secondaryColor,
+                                  width: 1.0,
+                                );
+
                                 return Container(
                                   decoration: BoxDecoration(
                                       color: listTileColor,
-                                      border: const Border(
-                                        bottom: BorderSide(
-                                          color: secondaryColor,
-                                          width: 1.0,
-                                        ),
-                                        left: BorderSide(
-                                          color: secondaryColor,
-                                          width: 1.0,
-                                        ),
-                                        right: BorderSide(
-                                          color: secondaryColor,
-                                          width: 1.0,
-                                        ),
+                                      border: Border(
+                                        bottom: borderSide,
+                                        left: borderSide,
+                                        right: borderSide,
                                       ),
                                     borderRadius: BorderRadius.circular(4.0),
                                   ),
                                   child: ListTile(
                                     visualDensity: const VisualDensity(vertical: -4),
-                                    leading: Text(
-                                      key,
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14.0,
-                                      ),
-                                    ),
-                                    trailing: Text(
-                                      value!,
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14.0,
-                                      ),
-                                    ),
+                                    leading: _buildListTileText(text: key),
+                                    trailing: _buildListTileText(text: value!),
                                   ),
                                 );
                               },
@@ -181,6 +161,16 @@ class StopwatchPage extends ConsumerWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildListTileText({required String text}) {
+    return Text(
+      text,
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 14.0,
       ),
     );
   }
