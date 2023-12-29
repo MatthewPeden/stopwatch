@@ -1,8 +1,9 @@
-import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../utils/timer_interface.dart';
+
 final stopwatchProvider = StateNotifierProvider<StopwatchNotifier, StopwatchState>((ref) {
-  return StopwatchNotifier();
+  return StopwatchNotifier(RealTimer());
 });
 
 class StopwatchState {
@@ -26,21 +27,22 @@ class StopwatchState {
 }
 
 class StopwatchNotifier extends StateNotifier<StopwatchState> {
-  StopwatchNotifier() : super(StopwatchState(time: '00:00.00', isRunning: false, laps: {}));
+  final TimerInterface timer;
+
+  StopwatchNotifier(this.timer) : super(StopwatchState(time: '00:00.00', isRunning: false, laps: {}));
 
   int _intMinutes = 0;
   int _intSeconds = 0;
   int _intCentiseconds = 0;
   Map<String, String> _laps = {};
-  Timer? _timer;
 
   void start() {
-    _timer = Timer.periodic(const Duration(milliseconds: 10), (_) => _updateTime());
+    timer.start(const Duration(milliseconds: 10), _updateTime);
     state = state.copyWith(isRunning: !state.isRunning);
   }
 
   void stop() {
-    _timer?.cancel();
+    timer.stop();
     state = state.copyWith(isRunning: !state.isRunning);
   }
 
