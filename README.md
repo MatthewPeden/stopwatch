@@ -24,18 +24,21 @@ This Stopwatch app, developed in Flutter, provides a tool for timing events. It 
 ### Installation
 
 1. **Clone the Repository**
+
     First, clone the repository to your local machine using the following command in your terminal:
-    `git clone https://github.com/MatthewPeden/stopwatch.git`
+    ```git clone https://github.com/MatthewPeden/stopwatch.git```
 2. **Navigate to the Project Directory**
+
     After cloning the repository, move into the project directory using the following command in your terminal:
-    `cd stopwatch`
+    ```cd stopwatch```
 3. **Fetch Dependencies**
+
     Fetch the necessary dependencies using the following command in your terminal:
-    `flutter pub get`
+    ```flutter pub get```
 4. **Prepare Emulator or Physical Device**
 5. **Run the App**
     After preparing your emulator or physical device, run the following command in your terminal to run the app:
-    `flutter run`
+    ```flutter run```
 
 ## Code Structure
 
@@ -62,11 +65,14 @@ This Stopwatch app, developed in Flutter, provides a tool for timing events. It 
 The app includes unit, widget, and integration tests to ensure confidence that it will perform as expected.
 
 1. **Unit Testing**
+
    To perform unit testing, run the the following command in your terminal:
    `flutter test test/unit`
 2. **Widget Testing**
+
     To perform widget testing, run the following command in your terminal:
     `flutter test test/widget`
 3. **Integration Testing**
+
     To perform integration testing, run the following command in your terminal:
     `flutter test integration_test`
