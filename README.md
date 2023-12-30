@@ -71,12 +71,15 @@ The app includes unit, widget, and integration tests to ensure confidence that i
 1. **Unit Testing**
 
    To perform unit testing, run the the following command in your terminal:
+
    `flutter test test/unit`
 2. **Widget Testing**
 
     To perform widget testing, run the following command in your terminal:
+
     `flutter test test/widget`
 3. **Integration Testing**
 
     To perform integration testing, run the following command in your terminal:
+
     `flutter test integration_test`
