@@ -31,12 +31,12 @@ class StopwatchPage extends ConsumerWidget {
       ),
       bottomNavigationBar: BottomAppBar(
         color: secondaryColor,
-        height: mediaHeight * 0.08,
+        height: mediaHeight * 0.05,
       ),
       body: Center(
-        child: SizedBox(
+        child: Container(
             width: maxWidth,
-            height: mediaHeight * 0.8,
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
             child: Column(
               children: <Widget>[
                 Container(
