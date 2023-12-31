@@ -66,6 +66,7 @@ This Stopwatch app, developed in Flutter, provides a tool for timing events. It 
 - lib/providers/timer_interface.dart: Contains timerInterfaceProvider which supplies a TimerInterface instance
 - lib/utils/colors.dart: Defines the color scheme for the app
 - lib/utils/timer_interface.dart: Contains abstract TimerInterface class for the timer functionality, RealTimer class for actual use in the application, and MockTimer class for testing
+- assets/fonts/: Contains custom fonts used in the app
 - test/unit/: Contains unit tests
 - test/widget/: Contains widget tests
 - integration_test/: Contains integration tests
