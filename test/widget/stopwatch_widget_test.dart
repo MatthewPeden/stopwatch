@@ -37,10 +37,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the stopwatch updates
-      mockTimer.elapseTime(const Duration(seconds: 1));
-      await tester.pump();
+      mockTimer.elapseTime(const Duration(seconds: 1, milliseconds: 450));
+      await tester.pumpAndSettle();
       final String stopwatchTime = (tester.widget(find.byType(Text).at(0)) as Text).data!;
-      expect(stopwatchTime, isNot(equals('00:00.00')));
+      expect(stopwatchTime, equals('00:01.45'));
 
       // Find stop and lap buttons
       expect(find.text('Stop'), findsOneWidget);
@@ -89,7 +89,7 @@ void main() {
       // Verify that the stopwatch has stopped
       final String stoppedTime = (tester.widget(find.byType(Text).at(0)) as Text).data!;
       mockTimer.elapseTime(const Duration(seconds: 1));
-      await tester.pump();
+      await tester.pumpAndSettle();
       expect((tester.widget(find.byType(Text).at(0)) as Text).data, equals(stoppedTime));
 
       // Reset stopwatch

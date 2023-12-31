@@ -25,6 +25,10 @@ void main() {
         ),
       );
 
+      // Simulate user reaction time on launch
+      await Future.delayed(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
       // Verify that the initial states are correct
       expect(find.byType(AppBar), findsOneWidget);
       expect(find.byType(BottomAppBar), findsOneWidget);
@@ -40,7 +44,7 @@ void main() {
       mockTimer.elapseTime(const Duration(seconds: 1, milliseconds: 450));
       await tester.pumpAndSettle();
       final String stopwatchTime = (tester.widget(find.byType(Text).at(0)) as Text).data!;
-      expect(stopwatchTime, isNot(equals('00:00.00')));
+      expect(stopwatchTime, equals('00:01.45'));
 
       // Find stop and lap buttons
       expect(find.text('Stop'), findsOneWidget);
@@ -100,9 +104,6 @@ void main() {
       mockTimer.elapseTime(const Duration(seconds: 1));
       await tester.pumpAndSettle();
       expect((tester.widget(find.byType(Text).at(0)) as Text).data, equals(stoppedTime));
-
-      mockTimer.elapseTime(const Duration(seconds: 3, milliseconds: 120));
-      await tester.pumpAndSettle();
 
       // Reset stopwatch
       await tester.tap(find.text('Reset'));
