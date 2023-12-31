@@ -47,11 +47,11 @@ This Stopwatch app, developed in Flutter, provides a tool for timing events. It 
 ## Code Structure
 
 - main.dart: Entry point of the application. Sets up the Flutter app and its theme
-- lib/pages/stopwatch.dart: Defines the StopwatchPage widget, which contains the UI for the stopwatch
-- lib/providers/stopwatch.dart: Contains the StopwatchNotifier and StopwatchState classes for managing the state of the stopwatch
+- lib/pages/stopwatch.dart: Contains the StopwatchPage class, which has the UI for the stopwatch
+- lib/providers/stopwatch.dart: Contains the StopwatchNotifier and StopwatchState classes for managing the state of the stopwatch, as well as stopwatchProvider to access and update the stopwatch state
+- lib/providers/timer_interface.dart: Contains timerInterfaceProvider which supplies a TimerInterface instance
 - lib/utils/colors.dart: Defines the color scheme for the app
-- lib/utils/timer_interface: Abstract class for the timer functionality
-- lib/utils/mock_timer.dart: Mock implementation of TimerInterface for testing
+- lib/utils/timer_interface: Abstract TimerInterface class for the timer functionality, RealTimer class for actual use in the application, and MockTimer class for testing
 - test/unit: Contains unit tests
 - test/widget: Contains widget tests
 - integration_test/ Contains integration tests
