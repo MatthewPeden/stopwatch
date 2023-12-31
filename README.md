@@ -21,40 +21,54 @@ This Stopwatch app, developed in Flutter, provides a tool for timing events. It 
   - [Android Instructions (for Windows)](https://docs.flutter.dev/get-started/install/windows/mobile)
 - IDE of Your Choosing
 
-### Installation
+### Installing and Running
+1. Switch to Flutter Stable Channel
+    
+    First, switch to Flutter's stable channel, upgrade Flutter, and verify the upgrade by running the following commands in your terminal:
+    
+    `flutter channel stable`
 
-1. **Clone the Repository**
+    `flutter upgrade`
 
-    First, clone the repository to your local machine using the following command in your terminal:
+    `flutter doctor`
+2. **Clone the Repository**
+
+    Next, clone this repository to your local machine using the following command in your terminal:
 
     `git clone https://github.com/MatthewPeden/stopwatch.git`
-2. **Navigate to the Project Directory**
+3. **Navigate to the Project Directory**
 
     After cloning the repository, move into the project directory using the following command in your terminal:
 
     `cd stopwatch`
-3. **Fetch Dependencies**
+4. **Fetch Dependencies**
 
     Fetch the necessary dependencies using the following command in your terminal:
 
     `flutter pub get`
-4. **Prepare Emulator or Physical Device**
 5. **Run the App**
+
     After preparing your emulator or physical device, run the following command in your terminal to run the app:
 
     `flutter run`
 
+    If you want to run it as a web app, install Google Chrome and run the following commands in your terminal:
+    
+    `flutter config --enable-web`
+
+    `flutter run -d chrome`
+
 ## Code Structure
 
-- main.dart: Entry point of the application. Sets up the Flutter app and its theme
+- lib/main.dart: Entry point of the application. Sets up the Flutter app and its theme
 - lib/pages/stopwatch.dart: Contains the StopwatchPage class, which has the UI for the stopwatch
 - lib/providers/stopwatch.dart: Contains the StopwatchNotifier and StopwatchState classes for managing the state of the stopwatch, as well as stopwatchProvider to access and update the stopwatch state
 - lib/providers/timer_interface.dart: Contains timerInterfaceProvider which supplies a TimerInterface instance
 - lib/utils/colors.dart: Defines the color scheme for the app
-- lib/utils/timer_interface: Abstract TimerInterface class for the timer functionality, RealTimer class for actual use in the application, and MockTimer class for testing
-- test/unit: Contains unit tests
-- test/widget: Contains widget tests
-- integration_test/ Contains integration tests
+- lib/utils/timer_interface.dart: Contains abstract TimerInterface class for the timer functionality, RealTimer class for actual use in the application, and MockTimer class for testing
+- test/unit/: Contains unit tests
+- test/widget/: Contains widget tests
+- integration_test/: Contains integration tests
 
 ## Dependencies
 
