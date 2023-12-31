@@ -7,14 +7,14 @@ import 'package:stopwatch/providers/timer_interface.dart';
 import 'package:stopwatch/utils/timer_interface.dart';
 
 void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  late MockTimer mockTimer;
-
-  setUp(() async {
-    mockTimer = MockTimer();
-  });
-
   group('StopwatchPage Integration Tests', () {
+    IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+    late MockTimer mockTimer;
+
+    setUp(() {
+      mockTimer = MockTimer();
+    });
+
     testWidgets('Stopwatch Full Test', (WidgetTester tester) async {
       await tester.pumpWidget(
         ProviderScope(

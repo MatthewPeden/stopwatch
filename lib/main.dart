@@ -18,6 +18,7 @@ class StopwatchApp extends StatelessWidget {
     return MaterialApp(
       title: 'Stopwatch',
       theme: ThemeData(
+        fontFamily: 'RobotoMono',
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromRGBO(22, 184, 146, 1.0)),
       ),
       home: const StopwatchPage(),
