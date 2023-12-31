@@ -1,9 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:stopwatch/providers/timer_interface.dart';
 
 import '../utils/timer_interface.dart';
 
 final stopwatchProvider = StateNotifierProvider<StopwatchNotifier, StopwatchState>((ref) {
-  return StopwatchNotifier(RealTimer());
+  final timer = ref.watch(timerInterfaceProvider);
+  return StopwatchNotifier(timer);
 });
 
 class StopwatchState {
@@ -21,57 +23,40 @@ class StopwatchState {
     return StopwatchState(
       time: time ?? this.time,
       isRunning: isRunning ?? this.isRunning,
-      laps: laps ?? this.laps,
+      laps: laps ?? this.laps
     );
   }
 }
 
 class StopwatchNotifier extends StateNotifier<StopwatchState> {
   final TimerInterface timer;
+  Map<String, String> _laps = {};
 
   StopwatchNotifier(this.timer) : super(StopwatchState(time: '00:00.00', isRunning: false, laps: {}));
 
-  int _intMinutes = 0;
-  int _intSeconds = 0;
-  int _intCentiseconds = 0;
-  Map<String, String> _laps = {};
-
   void start() {
-    timer.start(const Duration(milliseconds: 10), _updateTime);
-    state = state.copyWith(isRunning: !state.isRunning);
+    timer.start(_updateTime);
+    state = state.copyWith(isRunning: true);
   }
 
   void stop() {
     timer.stop();
-    state = state.copyWith(isRunning: !state.isRunning);
-  }
-
-  void _updateTime() {
-    if (_intCentiseconds == 99) {
-      _intCentiseconds = 0;
-      if (_intSeconds == 59) {
-        _intSeconds = 0;
-        _intMinutes++;
-      } else {
-        _intSeconds++;
-      }
-    } else {
-      _intCentiseconds++;
-    }
-
-    final stringMinutes = _intMinutes.toString().padLeft(2, '0');
-    final stringSeconds = _intSeconds.toString().padLeft(2, '0');
-    final stringCentiseconds = _intCentiseconds.toString().padLeft(2, '0');
-
-    state = state.copyWith(time: '$stringMinutes:$stringSeconds.$stringCentiseconds');
+    state = state.copyWith(isRunning: false);
   }
 
   void reset() {
-    _intMinutes = 0;
-    _intSeconds = 0;
-    _intCentiseconds = 0;
+    timer.reset();
     _laps = {};
     state = state.copyWith(time: '00:00.00', laps: {});
+  }
+
+  void _updateTime() {
+    final elapsedTime = timer.elapsedTime;
+    final stringMinutes = elapsedTime.inMinutes.toString().padLeft(2, '0');
+    final stringSeconds = (elapsedTime.inSeconds % 60).toString().padLeft(2, '0');
+    final stringCentiseconds = ((elapsedTime.inMilliseconds % 1000) ~/ 10).toString().padLeft(2, '0');
+
+    state = state.copyWith(time: '$stringMinutes:$stringSeconds.$stringCentiseconds');
   }
 
   void addLap() {

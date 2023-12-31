@@ -2,11 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:stopwatch/pages/stopwatch.dart';
+import 'package:stopwatch/providers/timer_interface.dart';
+import 'package:stopwatch/utils/timer_interface.dart';
 
 void main() {
   group('StopwatchPage Tests', () {
+    late MockTimer mockTimer;
+
+    setUp(() {
+      mockTimer = MockTimer();
+    });
+
     testWidgets('Stopwatch Widget Test', (WidgetTester tester) async {
-      await tester.pumpWidget(const ProviderScope(child: MaterialApp(home: StopwatchPage())));
+      await tester.pumpWidget(
+          ProviderScope(
+            overrides: [
+              timerInterfaceProvider.overrideWithValue(mockTimer),
+            ],
+            child: const MaterialApp(
+                home: StopwatchPage()
+            ),
+          ),
+      );
 
       // Verify that the initial states are correct
       expect(find.byType(AppBar), findsOneWidget);
@@ -20,7 +37,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the stopwatch updates
-      await tester.pump(const Duration(seconds: 1));
+      mockTimer.elapseTime(const Duration(seconds: 1));
+      await tester.pump();
       final String stopwatchTime = (tester.widget(find.byType(Text).at(0)) as Text).data!;
       expect(stopwatchTime, isNot(equals('00:00.00')));
 
@@ -70,7 +88,8 @@ void main() {
 
       // Verify that the stopwatch has stopped
       final String stoppedTime = (tester.widget(find.byType(Text).at(0)) as Text).data!;
-      await tester.pump(const Duration(seconds: 1));
+      mockTimer.elapseTime(const Duration(seconds: 1));
+      await tester.pump();
       expect((tester.widget(find.byType(Text).at(0)) as Text).data, equals(stoppedTime));
 
       // Reset stopwatch

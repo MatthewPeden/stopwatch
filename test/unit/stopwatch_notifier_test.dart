@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:stopwatch/providers/stopwatch.dart';
-import 'package:stopwatch/utils/mock_timer.dart';
+import 'package:stopwatch/utils/timer_interface.dart';
 
 void main() {
   group('Stopwatch Notifier Tests', () {

@@ -3,13 +3,27 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:stopwatch/main.dart';
+import 'package:stopwatch/providers/timer_interface.dart';
+import 'package:stopwatch/utils/timer_interface.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  late MockTimer mockTimer;
+
+  setUp(() async {
+    mockTimer = MockTimer();
+  });
 
   group('StopwatchPage Integration Tests', () {
     testWidgets('Stopwatch Full Test', (WidgetTester tester) async {
-      await tester.pumpWidget(const ProviderScope(child: StopwatchApp()));
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            timerInterfaceProvider.overrideWithValue(mockTimer),
+          ],
+          child: const StopwatchApp(),
+        ),
+      );
 
       // Verify that the initial states are correct
       expect(find.byType(AppBar), findsOneWidget);
@@ -23,7 +37,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the stopwatch updates
-      await Future.delayed(const Duration(seconds: 1, milliseconds: 450));
+      mockTimer.elapseTime(const Duration(seconds: 1, milliseconds: 450));
       await tester.pumpAndSettle();
       final String stopwatchTime = (tester.widget(find.byType(Text).at(0)) as Text).data!;
       expect(stopwatchTime, isNot(equals('00:00.00')));
@@ -40,7 +54,7 @@ void main() {
       expect(find.text('Total Laps: 1'), findsOneWidget);
       expect(find.byType(ListTile), findsOneWidget);
 
-      await Future.delayed(const Duration(seconds: 2, milliseconds: 150));
+      mockTimer.elapseTime(const Duration(seconds: 2, milliseconds: 150));
       await tester.pumpAndSettle();
 
       // Add 9 more laps
@@ -48,7 +62,7 @@ void main() {
         await tester.tap(find.text('Lap'));
         await tester.pumpAndSettle();
 
-        await Future.delayed(const Duration(seconds: 1, milliseconds: 650));
+        mockTimer.elapseTime(const Duration(seconds: 1, milliseconds: 650));
         await tester.pumpAndSettle();
       }
 
@@ -74,7 +88,7 @@ void main() {
       // Find total laps
       expect(find.text('Total Laps: 10'), findsOneWidget);
 
-      await Future.delayed(const Duration(seconds: 1, milliseconds: 380));
+      mockTimer.elapseTime(const Duration(seconds: 1, milliseconds: 380));
       await tester.pumpAndSettle();
 
       // Stop stopwatch
@@ -83,11 +97,11 @@ void main() {
 
       // Verify that the stopwatch has stopped
       final String stoppedTime = (tester.widget(find.byType(Text).at(0)) as Text).data!;
-      await Future.delayed(const Duration(seconds: 1));
+      mockTimer.elapseTime(const Duration(seconds: 1));
       await tester.pumpAndSettle();
       expect((tester.widget(find.byType(Text).at(0)) as Text).data, equals(stoppedTime));
 
-      await Future.delayed(const Duration(seconds: 3, milliseconds: 120));
+      mockTimer.elapseTime(const Duration(seconds: 3, milliseconds: 120));
       await tester.pumpAndSettle();
 
       // Reset stopwatch
