@@ -22,7 +22,7 @@ This Stopwatch app, developed in Flutter, provides a tool for timing events. It 
 - IDE of Your Choosing
 
 ### Installing and Running
-1. Switch to Flutter Stable Channel
+1. **Switch to Flutter Stable Channel**
     
     First, switch to Flutter's stable channel, upgrade Flutter, and verify the upgrade by running the following commands in your terminal:
     
