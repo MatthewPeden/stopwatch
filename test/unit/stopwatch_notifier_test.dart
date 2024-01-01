@@ -100,12 +100,20 @@ void main() {
       expect(stopwatchNotifier.state.time, matches(RegExp(r'\d{2}:\d{2}\.\d{2}')));
     });
 
-    test('Stopwatch time is correct when switching to new time unit', () {
+    test('Stopwatch time is correct when switching to new time units', () {
       stopwatchNotifier.start();
       mockTimer.elapseTime(const Duration(seconds: 1, milliseconds: 10));
       stopwatchNotifier.stop();
 
       expect(stopwatchNotifier.state.time, '00:01.01');
+
+      stopwatchNotifier.reset();
+
+      stopwatchNotifier.start();
+      mockTimer.elapseTime(const Duration(minutes: 1, milliseconds: 10));
+      stopwatchNotifier.stop();
+
+      expect(stopwatchNotifier.state.time, '01:00.01');
     });
 
     test('Time format for laps is correct', () {
